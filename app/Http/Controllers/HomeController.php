@@ -7,6 +7,7 @@ use App\Post;
 use App\PostType;
 use Auth;
 use Validator;
+use App\Http\Requests\PostRequest;
 
 class HomeController extends Controller
 {
@@ -50,22 +51,22 @@ class HomeController extends Controller
         ]);
     }
 
-    public function create(Request $request)
+    public function create(PostRequest $request)
     {
-        $validator = Validator::make(
-            $request->all(),
-            [
-                'title' => 'required|string',
-                'content' => 'required|string',
-            ],
-            [
-                'required' => ':attribute 不可空白',
-            ]
-        );
-        if ($validator->fails()) {
+        // $validator = Validator::make(
+        //     $request->all(),
+        //     [
+        //         'title' => 'required|string',
+        //         'content' => 'required|string',
+        //     ],
+        //     [
+        //         'required' => ':attribute 不可空白',
+        //     ]
+        // );
+        // if ($validator->fails()) {
             // $request->flash();
-            return back()->withInput()->withErrors($validator);
-        }
+        //     return back()->withInput()->withErrors($validator);
+        // }
         $post = new Post($request->all());
         $post->user_id = Auth::user()->id;
 
