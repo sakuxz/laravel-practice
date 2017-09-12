@@ -80,11 +80,6 @@ class HomeController extends Controller
     public function destroy(Request $request)
     {
         $posts = Post::get();
-        // $posts = Post::paginate(5);
-        // $request->session()->flash('test', 132);
-        // $request->session()->put('test', 132);
-        // $request->session()->forget('test', 132);
-        // $request->session()->flush('test', 132);
 
         return view('home', [
             'posts' => $posts,
@@ -94,11 +89,6 @@ class HomeController extends Controller
     public function edit(Request $request)
     {
         $posts = Post::get();
-        // $posts = Post::paginate(5);
-        // $request->session()->flash('test', 132);
-        // $request->session()->put('test', 132);
-        // $request->session()->forget('test', 132);
-        // $request->session()->flush('test', 132);
 
         return view('home', [
             'posts' => $posts,

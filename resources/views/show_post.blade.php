@@ -19,7 +19,9 @@
                 <h1>{{ $post->title }}</h1>
                 <span class="pull-right">{{ $post->created_at }}</span>
                 <span>{{ $post->auther->name }}</span>
-                <span class="badge">{{ $post->postType->name }}</span>
+                @if($post->postType)
+                    <span class="badge">{{ $post->postType->name }}</span>
+                @endif
             </div>
 
             <div>
