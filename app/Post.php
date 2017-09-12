@@ -18,5 +18,6 @@ class Post extends Model
 
     public function postType() {
         return $this->hasOne(PostType::class, 'id', 'type');
+        // return $this->belongsTo(PostType::class, 'type', 'id');
     }
 }
