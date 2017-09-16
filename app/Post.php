@@ -12,7 +12,7 @@ class Post extends Model
         'title', 'type', 'content',
     ];
 
-    public function auther() {
+    public function author() {
         return $this->belongsTo(User::class, 'user_id', 'id');
     }
 
