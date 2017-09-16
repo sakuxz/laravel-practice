@@ -6,7 +6,7 @@
     <div class="row">
         <div class="col-md-8 col-md-offset-2">
              @if (session('status'))
-                <div class="alert alert-success">
+                <div class="alert alert-info">
                     {{ session('status') }}
                 </div>
             @endif
@@ -31,7 +31,7 @@
     <div class="row">
         <div class="col-md-8 col-md-offset-2">
             @if(count($posts) == 0)
-                <p class="text-center">沒有任何文章</p>
+                <div class="well">沒有任何文章</div>
             @endif
             @foreach($posts as $post)
                 <div class="panel panel-default">
@@ -89,4 +89,6 @@
         </div>
     </div>
 </div>
+<pre>{{ $sql }}</pre>
+<pre>{{ var_dump(DB::getQueryLog()) }}</pre>
 @endsection

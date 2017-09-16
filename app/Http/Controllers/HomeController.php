@@ -7,6 +7,7 @@ use App\Post;
 use App\PostType;
 use Auth;
 use Validator;
+use DB;
 use App\Http\Requests\PostRequest;
 
 class HomeController extends Controller
@@ -31,8 +32,11 @@ class HomeController extends Controller
      */
     public function index(Request $request)
     {
+        DB::enableQueryLog();
+        // $posts = Post::join('post_types', 'posts.type', '=', 'post_types.id')->orderBy('created_at', 'desc')->paginate(5);
         // $posts = Post::with('postType')->orderBy('created_at', 'desc')->get();
         $posts = Post::with('postType')->orderBy('created_at', 'desc')->paginate(5);
+        $sql = Post::with('postType')->orderBy('created_at', 'desc')->toSql();
         // $request->session()->flash('test', 132);
         // $request->session()->put('test', 132);
         // $request->session()->forget('test', 132);
@@ -40,6 +44,7 @@ class HomeController extends Controller
 
         return view('home', [
             'posts' => $posts,
+            'sql' => $sql,
         ]);
     }
 
@@ -98,8 +103,8 @@ class HomeController extends Controller
 
     public function showPost($postId, Request $request)
     {
-        // $post = Post::with('auther')->with('postType')->find($postId);
-        $post = Post::with('auther')->with('postType')->findOrFail($postId);
+        // $post = Post::with('author')->with('postType')->find($postId);
+        $post = Post::with('author')->with('postType')->findOrFail($postId);
 
         return view('show_post', [
             'post' => $post,
