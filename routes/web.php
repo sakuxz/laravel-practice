@@ -17,6 +17,9 @@ Auth::routes();
 Route::get('/', 'HomeController@index')->name('home');
 Route::get('/create', 'HomeController@showCreateForm')->name('home.create');
 Route::get('/show/{post}', 'HomeController@showPost')->name('home.show');
+Route::get('/edit/{post}', 'HomeController@edit')->name('home.edit');
 Route::post('/create', 'HomeController@create');
-Route::post('/destroy', 'HomeController@destroy')->name('home.destroy');
-Route::post('/edit', 'HomeController@edit')->name('home.edit');
+Route::put('/update/{id}', 'HomeController@update')->name('home.update');
+Route::delete('/destroy/{post}', 'HomeController@destroy')->name('home.destroy');
+
+Route::resource('type', 'PostTypeController');

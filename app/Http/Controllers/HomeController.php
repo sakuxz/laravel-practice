@@ -36,6 +36,11 @@ class HomeController extends Controller
         // $posts = Post::join('post_types', 'posts.type', '=', 'post_types.id')->orderBy('created_at', 'desc')->paginate(5);
         // $posts = Post::with('postType')->orderBy('created_at', 'desc')->get();
         $posts = Post::with('postType')->orderBy('created_at', 'desc')->paginate(5);
+        $post_types = PostType::orderBy('name', 'asc')->get();
+        $type = null;
+        if ($request->query('type')) {
+            $type = PostType::findOrFail($request->query('type'));
+        }
         $sql = Post::with('postType')->orderBy('created_at', 'desc')->toSql();
         // $request->session()->flash('test', 132);
         // $request->session()->put('test', 132);
@@ -44,6 +49,8 @@ class HomeController extends Controller
 
         return view('home', [
             'posts' => $posts,
+            'post_types' => $post_types,
+            'type' => $type,
             'sql' => $sql,
         ]);
     }
@@ -83,22 +90,32 @@ class HomeController extends Controller
         }
     }
 
-    public function destroy(Request $request)
+    public function destroy($postId, Request $request)
     {
-        $posts = Post::get();
+        $post = Post::findOrFail($postId);
+        $post->delete();
 
-        return view('home', [
-            'posts' => $posts,
+        return redirect()->route('home');
+    }
+
+    public function edit($postId, Request $request)
+    {
+        $post = Post::with('author')->with('postType')->findOrFail($postId);
+        $post_types = PostType::orderBy('name', 'asc')->get();
+
+        return view('show_post_edit', [
+            'post' => $post,
+            'post_types' => $post_types,
         ]);
     }
 
-    public function edit(Request $request)
+    public function update($postId, PostRequest $request)
     {
-        $posts = Post::get();
+        $post = Post::findOrFail($postId);
+        $post->fill($request->all());
+        $post->save();
 
-        return view('home', [
-            'posts' => $posts,
-        ]);
+        return redirect()->route('home')->with(['status' => 'post updated!']);;
     }
 
     public function showPost($postId, Request $request)
