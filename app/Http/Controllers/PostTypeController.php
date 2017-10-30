@@ -102,7 +102,7 @@ class PostTypeController extends Controller
     public function destroy($id)
     {
         $post_type = PostType::findOrFail($id);
-        $post_type->posts()->delete();
+        // $post_type->posts()->delete();
         $post_type->delete();
 
         return redirect()->route('home')->with(['status' => 'post type deleted!']);
