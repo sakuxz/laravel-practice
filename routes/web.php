@@ -22,4 +22,5 @@ Route::post('/create', 'HomeController@create');
 Route::put('/update/{id}', 'HomeController@update')->name('home.update');
 Route::delete('/destroy/{post}', 'HomeController@destroy')->name('home.destroy');
 
-Route::resource('type', 'PostTypeController');
+Route::resource('type', 'PostTypeController',
+                ['except' => ['index', 'show']]);

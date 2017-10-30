@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Post;
 use App\PostType;
 use App\Http\Requests\PostTypeRequest;
 
@@ -85,7 +86,11 @@ class PostTypeController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $post_type = PostType::findOrFail($id);
+        $post_type->fill($request->all());
+        $post_type->save();
+
+        return redirect()->route('home')->with(['status' => 'post type updated!']);
     }
 
     /**
@@ -96,6 +101,10 @@ class PostTypeController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $post_type = PostType::findOrFail($id);
+        $post_type->posts()->delete();
+        $post_type->delete();
+
+        return redirect()->route('home')->with(['status' => 'post type deleted!']);
     }
 }
