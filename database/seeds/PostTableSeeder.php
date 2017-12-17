@@ -28,6 +28,6 @@ class PostTableSeeder extends Seeder
             }
         }
 
-        $user = factory(PostEloquent::class, 20)->create();
+        $posts = factory(PostEloquent::class, 20)->create();
     }
 }
