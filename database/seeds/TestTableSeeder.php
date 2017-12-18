@@ -34,7 +34,7 @@ class TestTableSeeder extends Seeder
             //     $user->posts()->save(factory(PostEloquent::class)->make());
             // });
         });
-        $posts = factory(PostEloquent::class, 20)->create()->each(function ($post) use ($postTypes, $users) {
+        $posts = factory(PostEloquent::class, 20)->make()->each(function ($post) use ($postTypes, $users) {
             $post->user_id = $users[mt_rand(0, count($users) - 1)]->id;
             $post->type = $postTypes[mt_rand(0, count($postTypes) - 1)]->id;
             $post->save();

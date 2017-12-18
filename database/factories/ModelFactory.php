@@ -30,7 +30,7 @@ $factory->define(App\Post::class, function (Faker\Generator $faker) {
         // 'title' => $faker->realText($maxNbChars = 10),
         'title' => $faker->sentence(),
         'content' => $faker->realText($maxNbChars = 200),
-        'user_id' => 0,
+        // 'user_id' => 0,
         'created_at' => $faker->dateTimeBetween('-1 month', '+3 days'),
         // 'type' => $faker->numberBetween(1, 3),
         // 'user_id' => function () {
