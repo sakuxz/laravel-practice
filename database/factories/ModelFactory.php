@@ -44,3 +44,9 @@ $factory->define(App\PostType::class, function (Faker\Generator $faker) {
         'name' => $faker->word(),
     ];
 });
+
+$factory->define(App\Comment::class, function (Faker\Generator $faker) {
+    return [
+        'content' => $faker->sentence(),
+    ];
+});

@@ -5,6 +5,7 @@ use Illuminate\Database\Seeder;
 use App\User as UserEloquent;
 use App\Post as PostEloquent;
 use App\PostType as PostTypeEloquent;
+use App\Comment as CommentEloquent;
 
 class TestTableSeeder extends Seeder
 {
@@ -38,6 +39,11 @@ class TestTableSeeder extends Seeder
             $post->user_id = $users[mt_rand(0, count($users) - 1)]->id;
             $post->type = $postTypes[mt_rand(0, count($postTypes) - 1)]->id;
             $post->save();
+        });
+        $contents = factory(CommentEloquent::class, 20)->make()->each(function ($comment) use ($posts, $users) {
+            $comment->user_id = $users[mt_rand(0, count($users) - 1)]->id;
+            $comment->post_id = $posts[mt_rand(0, count($posts) - 1)]->id;
+            $comment->save();
         });
     }
 }
