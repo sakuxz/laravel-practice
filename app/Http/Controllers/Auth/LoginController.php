@@ -2,8 +2,14 @@
 
 namespace App\Http\Controllers\Auth;
 
+use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
+use App\User;
+use Config;
+use Socialite;
+use App;
+use Auth;
 
 class LoginController extends Controller
 {
@@ -35,5 +41,42 @@ class LoginController extends Controller
     public function __construct()
     {
         $this->middleware('guest')->except('logout');
+    }
+
+    public function redirectToProvider($provider)
+    {
+        if ($provider === 'facebook') {
+            return Socialite::driver($provider)->with(['auth_type' => 'rerequest'])->redirect();
+        } else {
+            return Socialite::driver($provider)->redirect();
+        }
+    }
+
+    public function handleProviderCallback($provider, Request $request)
+    {
+        // dd($request->all());
+        $social_user = Socialite::driver($provider)->user();
+        $login_user = null;
+        try {
+            $login_user = $this->findOrCreateUser($social_user, $provider);
+        } catch (\Illuminate\Database\QueryException $e) {
+            return redirect()->route('login')->withErrors(['social_login_err' => $provider . ' login failed!']);
+        }
+        Auth::login($login_user);
+        return redirect()->route('home');
+    }
+
+    public function findOrCreateUser($user, $provider)
+    {
+        $authUser = User::where('email', $user->getEmail())->where('provider', $provider)->first();
+        if ($authUser) {
+            return $authUser;
+        }
+        return User::create([
+            'name' => $user->name,
+            'email' => $user->email,
+            'provider' => $provider,
+            'provider_id' => $user->id,
+        ]);
     }
 }

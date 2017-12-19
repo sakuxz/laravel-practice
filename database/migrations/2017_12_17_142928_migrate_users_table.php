@@ -14,9 +14,11 @@ class MigrateUsersTable extends Migration
     public function up()
     {
         Schema::table('users', function (Blueprint $table) {
+            $table->string('password')->nullable()->change();
             $table->string('avatar')->nullable();
-            $table->integer('type')->default(0);
             $table->string('provider')->nullable();
+            $table->string('provider_id')->nullable();
+            $table->integer('type')->default(0);
         });
     }
 
@@ -28,9 +30,11 @@ class MigrateUsersTable extends Migration
     public function down()
     {
         Schema::table('users', function (Blueprint $table) {
+            $table->string('password')->nullable(false)->change();
             $table->dropColumn('avatar');
-            $table->dropColumn('type');
             $table->dropColumn('provider');
+            $table->dropColumn('provider_id');
+            $table->dropColumn('type');
         });
     }
 }
