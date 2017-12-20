@@ -10,6 +10,7 @@ use Config;
 use Socialite;
 use App;
 use Auth;
+use Validator;
 
 class LoginController extends Controller
 {
@@ -46,6 +47,7 @@ class LoginController extends Controller
     public function redirectToProvider($provider)
     {
         if ($provider === 'facebook') {
+            // 如果權限要求失敗 (如 email 不同意提供)，下次進入 route 時還會再進入 fb 權限認證頁
             return Socialite::driver($provider)->with(['auth_type' => 'rerequest'])->redirect();
         } else {
             return Socialite::driver($provider)->redirect();
@@ -56,6 +58,26 @@ class LoginController extends Controller
     {
         // dd($request->all());
         $social_user = Socialite::driver($provider)->user();
+
+        $validator = Validator::make(
+            [
+                'name' => $social_user->name, 
+                'email' => $social_user->email, 
+            ],
+            [
+                'name' => 'required|string',
+                'email' => 'required|email',
+            ],
+            [
+                'email.required' => '請同意 email 的使用權',
+            ]
+        );
+
+        if ($validator->fails()) {
+            // return redirect()->route('login')->withErrors($validator);
+            return redirect()->route('login')->withErrors(['social_login_err'  => $validator->messages()->first()]);
+        }
+
         $login_user = null;
         try {
             $login_user = $this->findOrCreateUser($social_user, $provider);
