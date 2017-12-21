@@ -48,5 +48,6 @@ $factory->define(App\PostType::class, function (Faker\Generator $faker) {
 $factory->define(App\Comment::class, function (Faker\Generator $faker) {
     return [
         'content' => $faker->sentence(),
+        'created_at' => $faker->dateTimeBetween('-1 month', '+3 days'),
     ];
 });
