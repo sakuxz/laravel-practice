@@ -11,6 +11,18 @@
                     <form class="form-horizontal" method="POST" action="{{ route('login') }}">
                         {{ csrf_field() }}
 
+                        @if ($errors->has('social_login_err'))
+                            <div class="alert alert-danger" role="alert">{{ $errors->first('social_login_err') }}</div>
+                        @endif
+
+                        <div class="form-group">
+                            <div class="col-md-10 col-md-offset-1">
+                                <a href="{{ route('social.redirect', ['provider' => 'facebook']) }}" class="btn btn-primary btn-lg btn-block">Facebook</a>
+                            </div>
+                        </div>
+
+                        <hr>
+
                         <div class="form-group{{ $errors->has('email') ? ' has-error' : '' }}">
                             <label for="email" class="col-md-4 control-label">E-Mail Address</label>
 
@@ -60,6 +72,8 @@
                                 </a>
                             </div>
                         </div>
+
+
                     </form>
                 </div>
             </div>

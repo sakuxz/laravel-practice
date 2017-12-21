@@ -22,5 +22,16 @@ Route::post('/create', 'HomeController@create');
 Route::put('/update/{id}', 'HomeController@update')->name('home.update');
 Route::delete('/destroy/{post}', 'HomeController@destroy')->name('home.destroy');
 
-Route::resource('type', 'PostTypeController',
-                ['except' => ['index', 'show']]);
+Route::resource('type', 'PostTypeController', ['except' => ['index', 'show']]);
+Route::resource('post.comment', 'PostCommentController', ['only' => ['store', 'destroy']]);
+
+Route::group(['prefix' => 'login', 'middleware'=>['guest']], function () {
+    Route::get('{provider}/redirect', [
+        'as' => 'social.redirect',
+        'uses' => 'Auth\LoginController@redirectToProvider',
+    ]);
+    Route::get('{provider}/callback', [
+        'as' => 'social.callback',
+        'uses' => 'Auth\LoginController@handleProviderCallback',
+    ]);
+});

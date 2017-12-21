@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Post;
 use App\PostType;
+use App\Comment;
 use Auth;
 use Validator;
 use DB;
@@ -19,7 +20,7 @@ class HomeController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('auth', ['except' => [
+        $this->middleware(['auth', 'admin'], ['except' => [
             'index',
             'showPost',
         ]]);
@@ -128,9 +129,11 @@ class HomeController extends Controller
     {
         // $post = Post::with('author')->with('postType')->find($postId);
         $post = Post::with('author')->with('postType')->findOrFail($postId);
+        $comments = Comment::where('post_id', $postId)->orderBy('created_at', 'DESC')->paginate(5);
 
         return view('show_post', [
             'post' => $post,
+            'comments' => $comments,
         ]);
     }
 }
