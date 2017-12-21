@@ -129,7 +129,7 @@ class HomeController extends Controller
     {
         // $post = Post::with('author')->with('postType')->find($postId);
         $post = Post::with('author')->with('postType')->findOrFail($postId);
-        $comments = Comment::where('post_id', $postId)->orderBy('created_at', 'DESC')->paginate(5);
+        $comments = Comment::where('post_id', $postId)->with('author')->orderBy('created_at', 'DESC')->paginate(5);
 
         return view('show_post', [
             'post' => $post,
