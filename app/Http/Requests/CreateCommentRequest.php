@@ -14,6 +14,7 @@ class CreateCommentRequest extends FormRequest
      */
     public function authorize()
     {
+        // dd($this->input('content', 'not found'));
         return Auth::check();
     }
 
