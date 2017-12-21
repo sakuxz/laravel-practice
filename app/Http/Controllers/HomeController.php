@@ -131,6 +131,7 @@ class HomeController extends Controller
         $post = Post::with('author')->with('postType')->findOrFail($postId);
         $comments = Comment::where('post_id', $postId)->with('author')->orderBy('created_at', 'DESC')->paginate(5);
         dump($post);
+        dump($request->post);
 
         return view('show_post', [
             'post' => $post,
