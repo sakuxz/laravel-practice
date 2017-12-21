@@ -22,16 +22,6 @@ class PostTypeController extends Controller
     }
 
     /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
-    {
-        //
-    }
-
-    /**
      * Show the form for creating a new resource.
      *
      * @return \Illuminate\Http\Response
@@ -52,17 +42,6 @@ class PostTypeController extends Controller
         $post_type = new PostType($request->all());
         $post_type->save();
         return redirect()->route('home')->with(['status' => 'type created!']);
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
     }
 
     /**

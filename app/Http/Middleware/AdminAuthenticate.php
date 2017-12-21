@@ -20,8 +20,7 @@ class AdminAuthenticate
             return redirect()->route('login');
         }
 
-        $current_user = Auth::user();
-        if ($current_user && $current_user->isAdmin()){
+        if (Auth::user()->isAdmin()){
             return $next($request);
         } else {
             if ($request->ajax() || $request->wantsJson()){
