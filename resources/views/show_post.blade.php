@@ -6,16 +6,18 @@
     <div class="row">
         <div class="col-md-10 col-md-offset-1">
             <div class="page-header">
-                <form class="pull-right" method="POST" action="{{ route('home.destroy', ['post' => $post->id]) }}">
-                    {{ csrf_field() }}
-                    {{ method_field('delete') }}
-                    <a class="btn btn-xs btn-primary" href="{{ route('home.edit', ['post' => $post->id]) }}">
-                        編輯
-                    </a>
-                    <button class="btn btn-xs btn-danger" type="submit">
-                        刪除
-                    </button>
-                </form>
+                @if (Auth::check() && (Auth::user()->isAdmin() || Auth::user()->id === $post->user_id))
+                    <form class="pull-right" method="POST" action="{{ route('home.destroy', ['post' => $post->id]) }}">
+                        {{ csrf_field() }}
+                        {{ method_field('delete') }}
+                        <a class="btn btn-xs btn-primary" href="{{ route('home.edit', ['post' => $post->id]) }}">
+                            編輯
+                        </a>
+                        <button class="btn btn-xs btn-danger" type="submit">
+                            刪除
+                        </button>
+                    </form>
+                @endif
                 <h1>{{ $post->title }}</h1>
                 <span class="pull-right">{{ $post->created_at }}</span>
                 <span>{{ $post->author->name }}</span>
@@ -28,7 +30,7 @@
                 {{ $post->content }}
             </div>
             <div class="panel panel-default" style="margin-top: 2.5em;">
-                <div class="panel-heading">留言</div>
+                <div class="panel-heading">留言 ({{ $comments->count() }})</div>
                 <div class="panel-body">
                     
                     @if (Auth::check())
@@ -51,7 +53,6 @@
                     
                     @endif
 
-                    @if (count($comments) > 0)
                     @foreach ($comments as $comment)
                         <div class="media">
                             <div class="media-left">
@@ -75,7 +76,8 @@
                             </div>
                         </div>
                     @endforeach
-                    @endif
+
+                    {{ $comments->render() }}
                 </div>
             </div>
 
