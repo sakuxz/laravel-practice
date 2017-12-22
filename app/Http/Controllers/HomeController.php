@@ -20,7 +20,11 @@ class HomeController extends Controller
      */
     public function __construct()
     {
-        $this->middleware(['auth', 'admin'], ['except' => [
+        // $this->middleware(['auth', 'admin'], ['except' => [
+        //     'index',
+        //     'showPost',
+        // ]]);
+        $this->middleware(['auth'], ['except' => [
             'index',
             'showPost',
         ]]);
@@ -100,6 +104,9 @@ class HomeController extends Controller
     public function destroy($postId, Request $request)
     {
         $post = Post::findOrFail($postId);
+        if (!Auth::user()->isAdminOrOwner($post->user_id)) {
+            return response('Unauthorized.', 401);
+        }
         $post->delete();
 
         return redirect()->route('home')->with(['status' => 'post deleted!']);

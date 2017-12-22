@@ -18,7 +18,7 @@ Route::get('/', 'HomeController@index')->name('home');
 Route::get('/create', 'HomeController@showCreateForm')->name('home.create');
 Route::get('/show/{post}', 'HomeController@showPost')->name('home.show');
 Route::get('/edit/{post}', 'HomeController@edit')->name('home.edit');
-Route::post('/create', 'HomeController@create');
+Route::post('/create', 'HomeController@create')->name('home.store');
 Route::put('/update/{id}', 'HomeController@update')->name('home.update');
 Route::delete('/destroy/{post}', 'HomeController@destroy')->name('home.destroy');
 

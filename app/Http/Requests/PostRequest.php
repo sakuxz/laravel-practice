@@ -4,6 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 use Auth;
+use App\Post;
 
 class PostRequest extends FormRequest
 {
@@ -14,6 +15,10 @@ class PostRequest extends FormRequest
      */
     public function authorize()
     {
+        if ($this->route()->getName() === 'home.update') {
+            $post = Post::findOrFail($this->id);
+            return Auth::check() && Auth::user()->isAdminOrOwner($post->user_id);
+        }
         return Auth::check();
     }
 
