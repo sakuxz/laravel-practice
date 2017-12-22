@@ -99,6 +99,7 @@ class LoginController extends Controller
             'email' => $user->email,
             'provider' => $provider,
             'provider_id' => $user->id,
+            'avatar' => $user->avatar,
         ]);
     }
 }

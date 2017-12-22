@@ -48,6 +48,35 @@
                         @else
                             <li class="dropdown">
                                 <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+                                        @if ($comment->author->avatar)
+                                            <div style="
+                                                float: left;
+                                                width: 30px;
+                                                height: 30px;
+                                                margin-top: -4px;
+                                                margin-right: 5px;
+                                                border-radius: 50%;
+                                                border: 1px solid #9b9b9b;
+                                                overflow: hidden;
+                                                background-image: url('{{ $comment->author->avatar }}');
+                                                background-size: cover;
+                                                background-position: center;
+                                            "></div>
+                                        @else
+                                            <div style="
+                                                float: left;
+                                                width: 30px;
+                                                height: 30px;
+                                                margin-top: -4px;
+                                                margin-right: 5px;
+                                                border-radius: 50%;
+                                                border: 1px solid #9b9b9b;
+                                                overflow: hidden;
+                                                background-image: url('https://is5-ssl.mzstatic.com/image/thumb/Purple71/v4/40/8c/4a/408c4a16-8566-d99a-7171-38d69756e71e/iMessage_App_Icon-1x_U007emarketing-0-0-GLES2_U002c0-512MB-sRGB-0-0-0-85-181-0-0-0-0.png/266x200bb.jpeg');
+                                                background-size: cover;
+                                                background-position: center;
+                                            "></div>
+                                        @endif
                                     {{ Auth::user()->name }} <span class="caret"></span>
                                 </a>
 

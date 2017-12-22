@@ -57,7 +57,11 @@
                         <div class="media">
                             <div class="media-left">
                                 <a href="#">
-                                    <img class="media-object" style="width: 55px;" src="https://is5-ssl.mzstatic.com/image/thumb/Purple71/v4/40/8c/4a/408c4a16-8566-d99a-7171-38d69756e71e/iMessage_App_Icon-1x_U007emarketing-0-0-GLES2_U002c0-512MB-sRGB-0-0-0-85-181-0-0-0-0.png/266x200bb.jpeg" alt="avatar">
+                                    @if ($comment->author->avatar)
+                                        <img class="media-object" style="width: 55px;" src="{{ $comment->author->avatar }}" alt="avatar">
+                                    @else
+                                        <img class="media-object" style="width: 55px;" src="https://is5-ssl.mzstatic.com/image/thumb/Purple71/v4/40/8c/4a/408c4a16-8566-d99a-7171-38d69756e71e/iMessage_App_Icon-1x_U007emarketing-0-0-GLES2_U002c0-512MB-sRGB-0-0-0-85-181-0-0-0-0.png/266x200bb.jpeg" alt="avatar">
+                                    @endif
                                 </a>
                             </div>
                             <div class="media-body">
