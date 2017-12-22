@@ -20,7 +20,7 @@
                 @endif
                 @if(isset($type))
                     分類：{{ $type->name }}
-                    @if(Auth::check())
+                    @if(Auth::check() && Auth::user()->isAdmin())
                         <form class="pull-right" action="{{ route('type.destroy', ['id' => $type->id]) }}" method="post">
                             {{ csrf_field() }}
                             {{ method_field('delete') }}
@@ -68,7 +68,7 @@
                         <div class="row">
                             
                             <div class="col-xs-8">
-                                @if(Auth::check())
+                                @if(Auth::check() && Auth::user()->isAdminOrOwner($post->user_id))
                                     <form method="POST" action="{{ route('home.destroy', ['post' => $post->id]) }}">
                                         <a class="btn btn-xs btn-primary" href="{{ route('home.edit', ['post' => $post->id]) }}">
                                             編輯
@@ -102,7 +102,7 @@
                     <a class="list-group-item {{ isset($type) && $type->id === $post_type->id ? 'active' : '' }}"
                         href="{{ route('home', ['type' => $post_type->id]) }}">{{ $post_type->name }}</a>
                 @endforeach
-                @if(Auth::check())
+                @if(Auth::check() && Auth::user()->isAdmin())
                     <a class="list-group-item" href="{{ route('type.create') }}">新增分類</a>
                 @endif
             </div>

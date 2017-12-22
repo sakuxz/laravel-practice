@@ -66,7 +66,7 @@
                                 {{ $comment->content }}
                             </div>
                             <div class="media-right">
-                                @if (Auth::check() && (Auth::user()->isAdmin() || $comment->user_id === Auth::user()->id)) 
+                                @if (Auth::check() && Auth::user()->isAdminOrOwner($comment->user_id)) 
                                     <form method="post" action="{{ route('post.comment.destroy', ['post' => $post->id, 'comment' => $comment->id]) }}">
                                         {{ method_field('delete') }}
                                         {{ csrf_field() }}
