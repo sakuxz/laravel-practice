@@ -48,7 +48,7 @@
                         @else
                             <li class="dropdown">
                                 <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-                                        @if ($comment->author->avatar)
+                                        @if (Auth::user()->avatar)
                                             <div style="
                                                 float: left;
                                                 width: 30px;
@@ -58,7 +58,7 @@
                                                 border-radius: 50%;
                                                 border: 1px solid #9b9b9b;
                                                 overflow: hidden;
-                                                background-image: url('{{ $comment->author->avatar }}');
+                                                background-image: url('{{ Auth::user()->avatar }}');
                                                 background-size: cover;
                                                 background-position: center;
                                             "></div>
