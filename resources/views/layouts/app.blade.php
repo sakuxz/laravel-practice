@@ -58,7 +58,7 @@
                                                 border-radius: 50%;
                                                 border: 1px solid #9b9b9b;
                                                 overflow: hidden;
-                                                background-image: url('{{ Auth::user()->avatar }}');
+                                                background-image: url('{{ asset(Auth::user()->avatar) }}');
                                                 background-size: cover;
                                                 background-position: center;
                                             "></div>
@@ -81,6 +81,11 @@
                                 </a>
 
                                 <ul class="dropdown-menu" role="menu">
+                                    <li>
+                                        <a href="{{ route('user.avatar') }}">
+                                            修改頭像
+                                        </a>
+                                    </li>
                                     <li>
                                         <a href="{{ route('logout') }}"
                                             onclick="event.preventDefault();

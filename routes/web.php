@@ -35,3 +35,6 @@ Route::group(['prefix' => 'login', 'middleware'=>['guest']], function () {
         'uses' => 'Auth\LoginController@handleProviderCallback',
     ]);
 });
+
+Route::get('/user/avatar', 'UserController@getAvatar')->name('user.avatar');
+Route::post('/user/avatar', 'UserController@postAvatar');
